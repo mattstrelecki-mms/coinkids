@@ -717,7 +717,9 @@
     };
     try {
       const saved = localStorage.getItem('ck-dark');
-      if (saved === '1' || (saved === null && window.matchMedia('(prefers-color-scheme: dark)').matches)) setDark(true);
+      // Mobile defaults to LIGHT regardless of OS preference; respect explicit user choice on either device.
+      const isMobile = window.matchMedia('(max-width: 767px)').matches;
+      if (saved === '1' || (saved === null && !isMobile && window.matchMedia('(prefers-color-scheme: dark)').matches)) setDark(true);
     } catch(e) {}
     darkBtn && darkBtn.addEventListener('click', () => setDark(!document.documentElement.classList.contains('dark')));
 
