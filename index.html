@@ -82,29 +82,16 @@
     .appstore .small { font-size: 11px; line-height: 1; opacity: 0.85; letter-spacing: 0.04em; }
     .appstore .big   { font-size: 19px; line-height: 1.1; font-weight: 600; letter-spacing: -0.01em; }
 
-    /* Phone — real iPhone 17 Pro PNG bezel with screen positioned in inset */
+    /* Phone — pre-framed iPhone 17 Pro mockup PNGs (frame baked in) */
     .phone-frame {
-      width: 290px; aspect-ratio: 365 / 750;
+      width: 290px; aspect-ratio: 1419 / 2796;
       position: relative;
       filter: drop-shadow(0 30px 50px rgba(0,0,0,0.35)) drop-shadow(0 12px 24px rgba(0,0,0,0.25));
     }
     .phone-frame.tilt-l { transform: rotate(-4deg); }
     .phone-frame.tilt-r { transform: rotate(4deg); }
-    .phone-frame .phone-bezel {
-      position: absolute; inset: 0; width: 100%; height: 100%;
-      pointer-events: none; z-index: 2;
-    }
-    /* Screen inset — tight to the bezel's actual inner cutout (measured from PNG):
-       top y=30, left x=17, right x=348, bottom y=720 in 365×750 image. */
-    .phone-screen {
-      position: absolute;
-      top: 4%; left: 4.66%; right: 4.66%; bottom: 4%;
-      border-radius: 30px; overflow: hidden;
-      background: #F2F2F7; z-index: 1;
-    }
-    .phone-screen img {
-      width: 100%; height: 100%; object-fit: cover; object-position: top center;
-      display: block;
+    .phone-frame img {
+      width: 100%; height: 100%; display: block; object-fit: contain;
     }
 
     /* Coin */
@@ -285,10 +272,7 @@
         </div>
 
         <div class="phone-frame relative z-10">
-          <div class="phone-screen">
-            <img src="assets/screens/parent-home.png" alt="Coinkids parent home — Needs Your Review queue with chore approvals" />
-          </div>
-          <img class="phone-bezel" src="assets/iphone-frame.png" alt="" aria-hidden="true" />
+          <img src="assets/screens/parent-home-framed.png" alt="Coinkids parent home — Needs Your Review queue with chore approvals" />
         </div>
       </div>
     </div>
@@ -485,12 +469,10 @@
       <div class="mt-14 grid md:grid-cols-12 gap-8 items-center">
         <div class="md:col-span-7 relative flex justify-center md:justify-start gap-6">
           <div class="phone-frame tilt-l reveal">
-            <div class="phone-screen"><img src="assets/screens/parent-home.png" alt="Parent home — Needs Your Review queue" /></div>
-            <img class="phone-bezel" src="assets/iphone-frame.png" alt="" aria-hidden="true" />
+            <img src="assets/screens/parent-home-framed.png" alt="Parent home — Needs Your Review queue" />
           </div>
           <div class="phone-frame tilt-r reveal -mt-8">
-            <div class="phone-screen"><img src="assets/screens/kid-home.png" alt="Kid view — Emma's home, streak and chores" /></div>
-            <img class="phone-bezel" src="assets/iphone-frame.png" alt="" aria-hidden="true" />
+            <img src="assets/screens/kid-home-framed.png" alt="Kid view — Emma's home, streak and chores" />
           </div>
         </div>
 
@@ -554,10 +536,7 @@
             <div class="w-[420px] h-[420px] rounded-full bg-white/10 blur-3xl"></div>
           </div>
           <div class="reveal phone-frame relative z-10">
-            <div class="phone-screen">
-              <img src="assets/screens/savings.png" alt="Coinkids Savings screen — read-only Bitcoin balance and projections" />
-            </div>
-            <img class="phone-bezel" src="assets/iphone-frame.png" alt="" aria-hidden="true" />
+            <img src="assets/screens/savings-framed.png" alt="Coinkids Savings screen — read-only Bitcoin balance and projections" />
           </div>
         </div>
       </div>
