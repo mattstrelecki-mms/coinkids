@@ -111,6 +111,11 @@
       position: relative;
       /* Pre-framed PNGs already include a baked-in shadow — no extra drop-shadow here */
     }
+    /* Compact pair: smaller on mobile so two phones fit side-by-side without overflow */
+    .phone-frame.sm-pair { width: 160px; }
+    @media (min-width: 768px) {
+      .phone-frame.sm-pair { width: 290px; }
+    }
     .phone-frame.tilt-l { transform: rotate(-4deg); }
     .phone-frame.tilt-r { transform: rotate(4deg); }
     .phone-frame img {
@@ -275,7 +280,7 @@
               <div class="big">App Store</div>
             </div>
           </a>
-          <div class="reveal text-sm text-white/80 font-medium">
+          <div class="reveal w-full sm:w-auto sm:max-w-xs text-sm text-white/80 font-medium leading-snug">
             No ads. We don't store your data, so we couldn't sell it if we tried.
           </div>
         </div>
@@ -503,10 +508,10 @@
 
       <div class="mt-14 grid md:grid-cols-12 gap-8 items-center">
         <div class="md:col-span-7 relative flex justify-center md:justify-start gap-6">
-          <div class="phone-frame tilt-l reveal">
+          <div class="phone-frame sm-pair tilt-l reveal">
             <img src="assets/screens/parent-home-framed.png" alt="Parent home — Needs Your Review queue" />
           </div>
-          <div class="phone-frame tilt-r reveal -mt-8">
+          <div class="phone-frame sm-pair tilt-r reveal -mt-6 md:-mt-8">
             <img src="assets/screens/kid-home-framed.png" alt="Kid view — Emma's home, streak and chores" />
           </div>
         </div>
@@ -702,11 +707,11 @@
   <section id="download" class="hero-bg text-white">
     <div class="max-w-5xl mx-auto px-5 sm:px-8 py-24 md:py-32 text-center relative">
       <div class="reveal inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 backdrop-blur text-xs font-semibold tracking-wide uppercase ring-1 ring-white/20">Free for the first 1,000 families</div>
-      <h2 class="reveal font-display font-extrabold text-5xl md:text-7xl leading-[1.02] mt-6">
-        Raise the kid who<br/>
-        <span class="italic text-amber2-light">races</span> to do the dishes.
+      <h2 class="reveal font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] mt-6">
+        Start their work ethic at <span class="italic font-black text-amber2-light">6</span>.<br/>
+        Watch it pay off at <span class="italic font-black text-amber2-light">26</span>.
       </h2>
-      <p class="reveal text-xl text-white/85 mt-6 max-w-xl mx-auto">No ads. No data harvesting. Just a system that works.</p>
+      <p class="reveal text-lg sm:text-xl text-white/85 mt-6 max-w-xl mx-auto">Real chores. Real earnings. Optional Bitcoin savings.</p>
 
       <div class="reveal mt-9 flex flex-col sm:flex-row items-center justify-center gap-4">
         <a href="#" class="appstore">
