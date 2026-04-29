@@ -111,8 +111,11 @@
       position: relative;
       /* Pre-framed PNGs already include a baked-in shadow — no extra drop-shadow here */
     }
-    /* Compact pair: smaller on mobile so two phones fit side-by-side without overflow */
-    .phone-frame.sm-pair { width: 160px; }
+    /* Compact pair: scaled down on mobile so two phones fit side-by-side; full size at md+ */
+    .phone-frame.sm-pair { width: 185px; }
+    @media (min-width: 640px) {
+      .phone-frame.sm-pair { width: 240px; }
+    }
     @media (min-width: 768px) {
       .phone-frame.sm-pair { width: 290px; }
     }
@@ -507,7 +510,7 @@
       </div>
 
       <div class="mt-14 grid md:grid-cols-12 gap-8 items-center">
-        <div class="md:col-span-7 relative flex justify-center md:justify-start gap-6">
+        <div class="md:col-span-7 relative flex justify-center md:justify-start gap-3 sm:gap-5 md:gap-6">
           <div class="phone-frame sm-pair tilt-l reveal">
             <img src="assets/screens/parent-home-framed.png" alt="Parent home — Needs Your Review queue" />
           </div>
@@ -707,9 +710,8 @@
   <section id="download" class="hero-bg text-white">
     <div class="max-w-5xl mx-auto px-5 sm:px-8 py-24 md:py-32 text-center relative">
       <div class="reveal inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/15 backdrop-blur text-xs font-semibold tracking-wide uppercase ring-1 ring-white/20">Free for the first 1,000 families</div>
-      <h2 class="reveal font-display font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.05] mt-6">
-        Start their work ethic at <span class="italic font-black text-amber2-light">6</span>.<br/>
-        Watch it pay off at <span class="italic font-black text-amber2-light">26</span>.
+      <h2 class="reveal font-display font-extrabold text-3xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.08] tracking-tight mt-6 [text-wrap:balance]">
+        Start their work ethic at <span class="italic font-black text-amber2-light">6</span>. Watch it pay off at <span class="italic font-black text-amber2-light">26</span>.
       </h2>
       <p class="reveal text-lg sm:text-xl text-white/85 mt-6 max-w-xl mx-auto">Real chores. Real earnings. Optional Bitcoin savings.</p>
 
