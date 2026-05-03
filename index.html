@@ -212,6 +212,24 @@
     }
 
     body { transition: background-color .25s ease, color .25s ease; }
+
+    /* Floating help bubble */
+    .help-fab {
+      position: fixed; right: 20px; bottom: 20px; z-index: 50;
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 12px 18px; border-radius: 9999px;
+      background: #8B5CF6; color: white;
+      font-weight: 700; font-size: 14px; line-height: 1;
+      box-shadow: 0 10px 30px -8px rgba(139,92,246,0.55), 0 4px 10px rgba(0,0,0,0.18);
+      text-decoration: none;
+      transition: transform .15s ease, box-shadow .15s ease, background-color .15s ease;
+    }
+    .help-fab:hover { background: #7C3AED; transform: translateY(-1px); box-shadow: 0 14px 36px -8px rgba(139,92,246,0.7), 0 6px 14px rgba(0,0,0,0.22); }
+    .help-fab:active { transform: translateY(0); }
+    .help-fab svg { width: 18px; height: 18px; }
+    @media (max-width: 480px) {
+      .help-fab { padding: 11px 14px; font-size: 13px; right: 14px; bottom: 14px; }
+    }
   </style>
 </head>
 <body class="bg-page text-ink dark:bg-night dark:text-white antialiased">
@@ -228,6 +246,7 @@
         <a href="#features" class="hover:text-primary transition">Features</a>
         <a href="#story" class="hover:text-primary transition">Why I Built It</a>
         <a href="#faq" class="hover:text-primary transition">FAQ</a>
+        <a href="#help" class="hover:text-primary transition">Help</a>
         <a href="donate.html" class="hover:text-primary transition">Donate</a>
       </div>
 
@@ -252,6 +271,7 @@
         <a href="#features" class="py-2">Features</a>
         <a href="#story" class="py-2">Why I Built It</a>
         <a href="#faq" class="py-2">FAQ</a>
+        <a href="#help" class="py-2">Help</a>
         <a href="donate.html" class="py-2">Donate</a>
         <a href="privacy.html" class="py-2">Privacy Policy</a>
         <a href="https://apps.apple.com/us/app/coinkids-kid-value-creation/id6748862670?platform=iphone" target="_blank" rel="noopener" aria-label="Download Coinkids on the App Store" class="mt-2 px-4 py-3 rounded-card bg-primary text-white text-center font-semibold">Download on the App Store</a>
@@ -712,6 +732,43 @@
     </div>
   </section>
 
+  <!-- ============ HELP / SUPPORT ============ -->
+  <section id="help" class="py-20 md:py-24 bg-white dark:bg-night-card border-y border-black/5 dark:border-white/10">
+    <div class="max-w-3xl mx-auto px-5 sm:px-8">
+      <div class="reveal text-center">
+        <div class="text-xs font-bold tracking-widest uppercase text-primary">Help &amp; support</div>
+        <h2 class="font-display font-extrabold text-4xl md:text-5xl mt-3 leading-tight [text-wrap:balance]">Stuck? Got an idea? <span class="italic text-amber2">Just say hi.</span></h2>
+        <p class="mt-5 text-lg text-ink-muted dark:text-white/70 leading-relaxed [text-wrap:balance]">If your kid did something wild because of this app — please tell me. Those emails make my week.</p>
+      </div>
+
+      <div class="reveal mt-10 flex flex-wrap justify-center gap-3">
+        <a href="mailto:hi@thecoinkids.app?subject=Wins%20from%20our%20house" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-amber2/10 text-amber2 font-semibold text-sm border border-amber2/30 hover:bg-amber2/15 transition">
+          <svg viewBox="0 0 24 24" class="w-4 h-4" fill="currentColor"><path d="M12 21s-7-4.35-7-10a5 5 0 0 1 9-3 5 5 0 0 1 9 3c0 5.65-7 10-7 10z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+          Wins from your house — these are my favorite emails
+        </a>
+        <a href="mailto:hi@thecoinkids.app?subject=Bug%20report" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-success/10 text-success font-semibold text-sm border border-success/30 hover:bg-success/15 transition">
+          <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Bug reports welcome
+        </a>
+        <a href="mailto:hi@thecoinkids.app?subject=Feature%20idea" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-success/10 text-success font-semibold text-sm border border-success/30 hover:bg-success/15 transition">
+          <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Feature ideas, even small ones
+        </a>
+        <a href="mailto:hi@thecoinkids.app?subject=Setup%20question" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-success/10 text-success font-semibold text-sm border border-success/30 hover:bg-success/15 transition">
+          <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Setup questions, anytime
+        </a>
+      </div>
+
+      <div class="reveal mt-10 text-center">
+        <a href="mailto:hi@thecoinkids.app" class="inline-flex items-center gap-2 px-6 py-3 rounded-card bg-primary hover:bg-primary-dark text-white font-semibold shadow-card transition">
+          <svg viewBox="0 0 24 24" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          hi@thecoinkids.app
+        </a>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ FINAL CTA ============ -->
   <section id="download" class="hero-bg text-white">
     <div class="max-w-5xl mx-auto px-5 sm:px-8 py-24 md:py-32 text-center relative">
@@ -735,6 +792,12 @@
   </section>
 
   </main>
+
+  <!-- Floating help bubble (persistent) -->
+  <a href="mailto:hi@thecoinkids.app?subject=Got%20a%20question%20about%20Coinkids" class="help-fab" aria-label="Email Coinkids — got a question?">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+    Got a question?
+  </a>
 
   <!-- ============ FOOTER ============ -->
   <footer class="bg-white dark:bg-night-card border-t border-black/5 dark:border-white/10 pt-14 pb-10">
@@ -761,6 +824,10 @@
           <li><a href="privacy.html" class="hover:text-primary">Privacy Policy</a></li>
           <li><a href="mailto:hi@thecoinkids.app" class="hover:text-primary">hi@thecoinkids.app</a></li>
         </ul>
+        <a href="mailto:hi@thecoinkids.app" class="mt-5 inline-flex items-center gap-2 px-4 py-2.5 rounded-card bg-primary/10 text-primary hover:bg-primary hover:text-white font-semibold text-sm transition">
+          <svg viewBox="0 0 24 24" class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+          Email Matt
+        </a>
       </div>
     </div>
 

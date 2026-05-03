@@ -226,6 +226,25 @@
           <p class="mt-3 text-sm text-ink-muted dark:text-white/65 leading-relaxed">A note from another parent who's used the app means as much as the sats. <a href="mailto:hi@thecoinkids.app" class="text-primary font-semibold hover:underline">hi@thecoinkids.app</a></p>
         </div>
       </div>
+
+      <!-- Latest contributions (live from mempool.space) -->
+      <div id="contribs-card" class="reveal mt-6 hidden">
+        <div class="bg-white dark:bg-night-card rounded-card p-6 md:p-7 shadow-card border border-black/5 dark:border-white/10">
+          <div class="flex items-center gap-3 mb-5">
+            <div class="w-10 h-10 rounded-full bg-btc/10 dark:bg-btc/20 grid place-items-center">
+              <svg viewBox="0 0 24 24" class="w-5 h-5 text-btc" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><polyline points="14 7 21 7 21 14"/></svg>
+            </div>
+            <div>
+              <div class="font-display font-bold text-lg">Latest contributions</div>
+              <div class="text-xs text-ink-muted dark:text-white/55">Live from the chain · refreshes when you do</div>
+            </div>
+          </div>
+          <ul id="contribs-list" class="divide-y divide-black/5 dark:divide-white/10"></ul>
+          <div class="mt-5 text-[11px] text-ink-muted dark:text-white/45 leading-relaxed">
+            On-chain donations are public. We never see who you are — just sats arriving. Thank you.
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -403,6 +422,97 @@
 
     addrEl.addEventListener('click', () => copyBtn.click());
     addrEl.style.cursor = 'pointer';
+
+    // ===== Latest contributions (mempool.space) =====
+    (async function loadContribs() {
+      const card = document.getElementById('contribs-card');
+      const list = document.getElementById('contribs-list');
+      if (!card || !list) return;
+      try {
+        const [confirmedRes, mempoolRes, pricesRes] = await Promise.all([
+          fetch(`https://mempool.space/api/address/${BTC_ADDRESS}/txs`),
+          fetch(`https://mempool.space/api/address/${BTC_ADDRESS}/txs/mempool`),
+          fetch('https://mempool.space/api/v1/prices')
+        ]);
+        if (!confirmedRes.ok) return; // bail quietly
+        const confirmed = await confirmedRes.json();
+        const mempool = mempoolRes.ok ? await mempoolRes.json() : [];
+        const prices = pricesRes.ok ? await pricesRes.json() : { USD: 0 };
+        const usdPerBtc = (prices && prices.USD) || 0;
+
+        const all = [...mempool, ...confirmed];
+        if (!all.length) return;
+
+        // For each tx, compute net incoming sats to our address.
+        // Skip self-sends/consolidations: tx where any vin is from our address.
+        const incoming = [];
+        for (const tx of all) {
+          const isSelfSend = (tx.vin || []).some(vi => vi.prevout && vi.prevout.scriptpubkey_address === BTC_ADDRESS);
+          if (isSelfSend) continue;
+          let sats = 0;
+          for (const vo of (tx.vout || [])) {
+            if (vo.scriptpubkey_address === BTC_ADDRESS) sats += vo.value || 0;
+          }
+          if (sats <= 0) continue;
+          incoming.push({
+            txid: tx.txid,
+            sats: sats,
+            confirmed: !!(tx.status && tx.status.confirmed),
+            blockTime: tx.status && tx.status.block_time ? tx.status.block_time : (tx.firstSeen || Math.floor(Date.now()/1000))
+          });
+        }
+        if (!incoming.length) return;
+
+        // Sort newest first, take 5
+        incoming.sort((a, b) => b.blockTime - a.blockTime);
+        const top = incoming.slice(0, 5);
+
+        const fmtBtc = (sats) => {
+          if (sats >= 100000) return (sats / 1e8).toFixed(4).replace(/0+$/,'').replace(/\.$/,'') + ' BTC';
+          return sats.toLocaleString('en-US') + ' sats';
+        };
+        const fmtUsd = (sats) => {
+          if (!usdPerBtc) return '';
+          const usd = (sats / 1e8) * usdPerBtc;
+          return '~$' + (usd >= 100 ? Math.round(usd).toLocaleString('en-US') : usd.toFixed(2));
+        };
+        const relTime = (ts) => {
+          const now = Math.floor(Date.now() / 1000);
+          const d = now - ts;
+          if (d < 60) return 'just now';
+          if (d < 3600) return Math.floor(d/60) + 'm ago';
+          if (d < 86400) return Math.floor(d/3600) + 'h ago';
+          if (d < 30*86400) return Math.floor(d/86400) + 'd ago';
+          if (d < 365*86400) return Math.floor(d/(30*86400)) + 'mo ago';
+          return Math.floor(d/(365*86400)) + 'y ago';
+        };
+        const shortTx = (tid) => tid.slice(0,6) + '…' + tid.slice(-4);
+
+        list.innerHTML = top.map(tx => {
+          const status = tx.confirmed
+            ? '<span class="inline-flex items-center gap-1 text-success text-[11px] font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-success"></span>Confirmed</span>'
+            : '<span class="inline-flex items-center gap-1 text-amber2 text-[11px] font-semibold"><span class="w-1.5 h-1.5 rounded-full bg-amber2 animate-pulse"></span>Pending</span>';
+          const usd = fmtUsd(tx.sats);
+          return `
+            <li class="py-3 flex items-center justify-between gap-3">
+              <div class="min-w-0">
+                <div class="font-display font-bold text-base text-ink dark:text-white">${fmtBtc(tx.sats)}${usd ? ' <span class="text-ink-muted dark:text-white/55 text-sm font-medium">' + usd + '</span>' : ''}</div>
+                <div class="mt-0.5 flex items-center gap-2 text-xs text-ink-muted dark:text-white/55">
+                  ${status}
+                  <span>·</span>
+                  <span>${relTime(tx.blockTime)}</span>
+                </div>
+              </div>
+              <a href="https://mempool.space/tx/${tx.txid}" target="_blank" rel="noopener" class="shrink-0 text-xs font-mono text-primary hover:underline">${shortTx(tx.txid)} ↗</a>
+            </li>
+          `;
+        }).join('');
+
+        card.classList.remove('hidden');
+      } catch (e) {
+        // Quiet failure — never show a broken card
+      }
+    })();
   </script>
 </body>
 </html>
